@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title>设置我的密码</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/v1/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/v1/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <span class="lp-header-icon-span">
+                        <i class="layui-icon layui-icon-form"></i>
+                    </span>
+                    <span class="lp-header-span">修改密码</span>
+                </div>
+                <div class="layui-card-body" pad15>
+                    <form method="post" action="{{:url('pwd.changeDo') }}">
+                        <div class="layui-form" lay-filter="">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">账号:</label>
+                                <div class="layui-form-label">
+                                    {{$loginName}}
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">新密码:</label>
+                                <div class="layui-input-inline">
+                                    <input type="password" name="password" lay-verify="pass1"
+                                           autocomplete="off" id="LAY_password" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">确认新密码:</label>
+                                <div class="layui-input-inline">
+                                    <input type="password" name="password_confirm" lay-verify="repass"
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn layui-btn-sm layui-btn-green" type="submit" lay-submit>确认修改</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/v1/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/v1/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'set']);
+</script>
+</body>
+</html>

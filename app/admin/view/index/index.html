@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/v1/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/v1/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="/public/css/dist/css/barrager.css" media="all">
+    <link rel="stylesheet" href="/public/v1/dragula/dragula.css" media="all">
+    <script src="/public/v1/dragula/dragula.js"></script>
+
+    <link rel="stylesheet" href="/v1/layuiadmin/layui/font/iconfont.css"/>
+    <script src="/v1/layuiadmin/lib/jquery.min.3.3.1.js"></script>
+    <script src="/v1/layuiadmin/layui/layui.js"></script>
+
+    <style>
+        .admin-header-lock {
+            width: 320px;
+            height: 170px;
+            padding: 20px;
+            position: relative;
+            text-align: center;
+        }
+
+        .admin-header-lock-img {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto;
+        }
+
+        .admin-header-lock-img img {
+            width: 60px;
+            height: 60px;
+            border-radius: 100%;
+        }
+
+        .admin-header-lock-name {
+            color: #009688;
+            margin: 8px 0 15px 0;
+        }
+
+        .input_btn {
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .admin-header-lock-input {
+            width: 170px;
+            color: #fff;
+            background-color: #009688;
+            float: left;
+            margin: 0 10px 0 40px;
+            border: none;
+        }
+
+        .admin-header-lock-input::-webkit-input-placeholder {
+            color: #fff;
+        }
+
+        .admin-header-lock-input::-moz-placeholder {
+            color: #fff;
+        }
+
+        .admin-header-lock-input::-ms-input-placeholder {
+            color: #fff;
+        }
+
+        .admin-header-lock-input:-moz-placeholder {
+            color: #fff;
+        }
+
+        #unlock {
+            float: left;
+        }
+
+        #lock-box p {
+            color: #e60000;
+        }
+
+        #lockPwd {
+            height: 38px
+        }
+
+        .inline-menu {
+            width: 100% !important;
+            height: 35px !important;
+            overflow-x: visible !important;
+            position: relative !important;
+        }
+
+        .inline-menu .layui-side-scroll {
+            width: 100%;
+            overflow-x: visible !important;
+
+        }
+
+        .inline-menu .layui-logo {
+            height: 25px;
+        }
+
+        .inline-menu .layui-nav {
+            padding-left: 100px;
+            height: 50px;
+        }
+
+        .inline-menu .layui-nav .layui-nav-item {
+            line-height: 50px;
+        }
+
+        .inline-menu .layui-nav-child {
+            top: 50px;
+        }
+
+        .layadmin-pagetabs .layui-tab-title li {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .selectCloseTime_partent {
+            display: none;
+        }
+
+        dd a .layui-form-switch {
+            margin: 0px;
+        }
+
+
+        /* chat 聊天群成员搜索样式 */
+        .layim-person-search {
+            position: absolute;
+            top: 50%;
+            transform: translate(0, -50%);
+            left: 330px;
+            display: flex;
+        }
+
+        .layim-person-input {
+            background: rgba(255, 255, 255, .33);
+            flex: 1;
+            height: 26px;
+            border: 1px solid rgba(0, 0, 0, .15);
+            border-radius: 26px;
+            padding: 0 26px 0 12px;
+            transition: all .3s ease-out;
+            width: 120px;
+        }
+
+        .layim-person-input:focus {
+            border-color: #5FB878;
+        }
+
+        .layim-person-search .layui-icon-search {
+            flex: 0 0 26px;
+            width: 26px;
+            height: 100%;
+            background: transparent;
+            border: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 18px;
+        }
+
+        .layim-person-search .layui-icon-search:active {
+            border-color: #5FB878;
+        }
+
+        .layim-chat-system {
+            display: none !important;
+        }
+
+        .gameLinkType .layui-anim-upbit, .gameLinkGame .layui-anim-upbit {
+            max-height: 160px !important;
+        }
+
+        .layui-form-type-item {
+            display: flex;
+        }
+
+        .layui-form-type-item .layui-form-select {
+            flex: 1;
+        }
+
+        #templateMsgPic {
+            max-height: 140px;
+            max-width: 140px;
+        }
+
+        .templateMsg + .templateMsg {
+            margin-top: 20px;
+        }
+
+        .abnormal_member_class {
+            top: -6px;
+            left: 5px;
+            color: white;
+            padding: 1px 6px;
+            border-radius: 50%;
+            background: red;
+            position: relative;
+        }
+    </style>
+
+</head>
+<body class="layui-layout-body">
+
+<div id="LAY_app" class="newAdmin">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <!-- 头部区域 -->
+            <div class="layui-logo" lay-href="/index.php/index/homepage"></div>
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item layadmin-flexible" lay-unselect style="margin: 0px 8px;">
+                    <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+                        <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+                    </a>
+                </li>
+
+                <li class="layui-nav-item layadmin-flexible" lay-unselect style="margin: 0px 8px;">
+                    <a href="javascript:;" title="侧边栏定位">
+                        <i class="layui-icon layui-icon-more-vertical" id="LAY_app_position"></i>
+                    </a>
+                </li>
+
+                <li class="layui-nav-item layui-hide-xs" id="nav-tool-bar" lay-unselect style="margin: 0px 8px;">
+                    <a href="javascript:;">
+                        <i class="layui-icon layui-icon-add-circle-fine tree"></i>
+                    </a>
+                    <div class="tree-hide collection-html">
+                        <div class="qc-shortcut-menu J-dropdownPanel">
+                            <div class="qc-shortcut-menu-inner">
+                                <div class="qc-shortcut-menu-title J-customNumTitle">收藏导航栏，最多允许收藏10个哦～</div>
+                                <div class="menu-list-all J-customProductList">
+                                    {{foreach ($menus as $menu) }}
+                                    <div class="menu-list-col">
+                                        <div class="menu-area-tit"><span>{{$menu['name']}}</span></div>
+                                        {{foreach ($menu['child'] as $child) }}
+                                        <div class="menu-area">
+                                            <div class="menu-area-con" aria-labelledby="product_list_title_2"
+                                                 tabindex="0" role="list">
+                                                <div class="menu-item">
+                                                    <div class="menu-item-tit" data-title="">
+                                                        <label>
+                                                            <input type="checkbox" class="menu-item-checkbox"
+                                                                   name="menue[]"
+                                                                   {{if in_array($child['role_name'], $collection, true) }}
+                                                            checked="checked"
+                                                            {{/if}}
+                                                            value="{{$child['role_name']}}">
+                                                            {{$child['name']}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{/foreach}}
+                                    </div>
+                                    {{/foreach}}
+                                </div>
+                                <div class="qc-shortcut-menu-tool">
+                                    <button type="button"
+                                            class="layui-btn qc-shortcut-cancel layui-btn-green layuiadmin-button-btn">
+                                        完成
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {{if $onlineAccountNum > 0 }}
+                <li class="layui-nav-item layui-hide-xs admin-online" lay-unselect style="margin: 0px 8px;">
+                    <a href="javascript:;">管理在线:<span id="admin_num">{{$onlineAccountNum}}</span></a>
+                    <div class="tree-hide account-count-html">
+                        <div class="qc-shortcut-menu J-dropdownPanel account-table" style="min-width: 500px">
+                            <table class="layui-table" lay-size="sm">
+                                <thead>
+                                <tr>
+                                    <th>用户名</th>
+                                    <th width="80">备注</th>
+                                    <th width="170">登录时间</th>
+                                    <th>登入IP</th>
+                                </tr>
+                                </thead>
+                                <tbody id="account-data-html">
+                                <tr height=40>
+                                    <td colspan="4">
+                                        <i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </li>
+                {{/if}}
+                <li class="layui-nav-item layui-hide-xs" lay-unselect style="margin: 0px 8px;">
+                    <a lay-href="/index.php/account/member_index?daiwan=1&mem_status=1" lay-text="会员管理">在线会员:<span
+                            id="user_num">{{$onlineUserNum}}</span></a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect style="margin: 0px 8px;">
+                    <a lay-href="/index.php/cash/Sitecash/sitecash_count" lay-text="视讯额度">视讯:<span id="sitemoney">{{$videoMoney}}</span></a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect style="margin: 0px 8px;">
+                    <a lay-href="/index.php/cash/Sitecash/sitecash_record?vtype=sp" lay-text="体育额度">体育:<span
+                            id="tymoney">{{$sportMoney}}</span></a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect style="margin: 0px 8px;">
+                    <a href="javascript:;" id="vlock">美东：{{$date}}</a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect style="margin: 0px 8px;">
+                    <a href="javascript:;" id="clock">北京：{{$date}}</a>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a layadmin-event="lockPage" lay-text="锁屏" title="锁屏">
+                        <i class="layui-icon layui-icon-password"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;" layadmin-event="refresh" title="刷新" class="padding10">
+                        <i class="layui-icon layui-icon-refresh-3"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="theme" class="padding10" title="换肤">
+                        <i class="layui-icon layui-icon-theme"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="note" class="padding10" title="小便签">
+                        <i class="layui-icon layui-icon-note"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="fullscreen" class="padding10" title="全屏">
+                        <i class="layui-icon layui-icon-screen-full"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;">
+                        <cite>{{$loginName}}</cite>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a lay-href="{{:url('pwd.change') }}">修改密码</a></dd>
+                        <dd><a href='javascript:;' id='open_autolock'>开启自动锁屏</a></dd>
+                        <dd><a href='javascript:;' id='close_autolock'>关闭自动锁屏</a></dd>
+                        <dd><a href='javascript:;' class="layui-form"> 开关弹幕 <input type="checkbox" checked name="switch"
+                                                                                   lay-skin="switch"
+                                                                                   lay-filter="switchTest"
+                                                                                   lay-text="ON|OFF"></a>
+                        <dd><a href='javascript:;' class="layui-form"> 异常会员通知 <input type="checkbox" checked
+                                                                                     name="switchh" lay-skin="switch"
+                                                                                     lay-filter="switchTesth"
+                                                                                     lay-text="ON|OFF"></a>
+                        </dd>
+
+                        <dd style="text-align: center;" class='selectCloseTime_partent'>
+                            <select id="selectCloseTime">
+                                <option value="300">5分钟</option>
+                                <option value="600">10分钟</option>
+                                <option value="900">15分钟</option>
+                                <option value="1200">20分钟</option>
+                                <option value="1500">25分钟</option>
+                            </select>
+                        </dd>
+                        <hr>
+                        <!-- 跳登莱利 start -->
+                        <!-- <dd><a target="_blank" onclick="window.open('/index.php/index/api?target=pk', this.getAttribute('target'));">跳转PK</a></dd>
+                        <dd><a target="_blank" onclick="window.open('/index.php/index/api?target=ll', this.getAttribute('target'));">跳转莱利</a></dd> -->
+                        <hr>
+                        <!-- 跳登莱利 end -->
+                        <dd style="text-align: center;"><a href="/index.php/index/login_out">退出</a></dd>
+                    </dl>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- 侧边菜单 -->
+        <div class="layui-side layui-side-menu" id='sideMenu'>
+            <div class="layui-side-scroll">
+
+                <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
+                    lay-filter="layadmin-system-side-menu">
+                    {{foreach ($sidebars as $sidebar) }}
+                    <li data-name="home" class="layui-nav-item navTheme">
+                        <a href="javascript:;" lay-tips="{{$sidebar['name']}}" lay-direction="2">
+                            <i class="layui-icon {{$sidebar['icon_class_name']}}" style="font-size: 20px;"></i>
+                            <cite>{{$sidebar['name']}}</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            {{foreach ($sidebar['child'] as $child) }}
+                            <dd data-name="console">
+                                {{if ($child['target'] == '_')}}
+                                <a target="_blank" href="{{$child['url']}}">{{$child['name']}}</a>
+                                {{else /}}
+                                <a lay-href="{{$child['url']}}">{{$child['name']}}</a>
+                                {{/if}}
+                            </dd>
+                            {{/foreach}}
+                        </dl>
+                    </li>
+                    {{/foreach}}
+                </ul>
+            </div>
+        </div>
+
+        <!-- 页面标签 -->
+        <div class="layadmin-pagetabs" id="LAY_app_tabs">
+            <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+                    <li class="layui-nav-item no-select" lay-unselect>
+                        <a href="javascript:;"></a>
+                        <dl class="layui-nav-child layui-anim-fadein">
+                            <dd layadmin-event="closeThisTabs"><a href="javascript:;">关闭当前标签页</a></dd>
+                            <dd layadmin-event="closeOtherTabs"><a href="javascript:;">关闭其它标签页</a></dd>
+                            <dd layadmin-event="closeAllTabs"><a href="javascript:;">关闭全部标签页</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+                <ul class="layui-tab-title dragula-container" id="LAY_app_tabsheader">
+                    <li dragablue="true" lay-id="/index.php/index/homepage" lay-attr="/index.php/index/homepage"
+                        class="layui-this"><i
+                            class="layui-icon layui-icon-home"></i></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- 主体内容 -->
+        <div class="layui-body" id="LAY_app_body">
+            <div class="layadmin-tabsbody-item layui-show">
+                <iframe name="pp_main_frame" src="/index.php/index/homepage" frameborder="0"
+                        class="layadmin-iframe"></iframe>
+            </div>
+        </div>
+
+        <!-- 辅助元素，一般用于移动设备下遮罩 -->
+        <div class="layadmin-body-shade" layadmin-event="shade"></div>
+    </div>
+</div>
+
+<div class="admin-header-lock" id="lock-box" style="display: none;">
+    <div class="admin-header-lock-img"><img src="/public/images/face.jpg"/></div>
+    <div class="userName admin-header-lock-name" id="lockUserName"></div>
+    <div class="input_btn">
+        <input type="password" class="admin-header-lock-input layui-input" placeholder="请输入密码解锁.." name="lockPwd"
+               id="lockPwd" minlength="6" maxlength="12"/>
+        <button class="layui-btn" id="unlock" lay-submit="" lay-filter="lockpsd">解锁</button>
+    </div>
+    <p>请输入登入密码，否则不会解锁成功哦！！！</p>
+</div>
+<script src="/v1/layuiadmin/layui/layui.js"></script>
+<script type="text/javascript" src="/public/web_sk/js/config.js"></script>
+<script type="text/javascript" src="/public/js/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="/public/css/dist/js/jquery.barrager.min.js"></script>
+<script type="text/javascript" src="/public/js/jquery.cookie.js"></script>
+<script>
+    var siteName = '{{$siteName}}';
+    var html = '';
+
+    var abnormal_member_count = 0;//异常会员次数
+    var layerIndex;//异常会员弹框
+
+    // 关闭异常会员弹框方法
+    function closeAbnormal() {
+        abnormal_member_count = 0;
+        layer.close(layerIndex);
+    }
+
+    if (siteName.length > 9) {
+        html += "<marquee width=200px direction=left align=middle id='logo_marquee'>";
+        html += siteName + "</marquee>";
+        $('.layui-logo').css('padding', '0');
+    } else {
+        html += '<span>' + siteName + '</span>';
+    }
+    $('.layui-logo').html(html);
+    $('#nav-tool-bar').hover(function () {
+        $('.collection-html').show();
+    }, function () {
+        $('.collection-html').hide();
+    });
+
+    $('.admin-online').hover(function () {
+        $('.account-count-html').show();
+        layui.admin.req({
+            url: "{{:url('online.account')}}",
+            type: 'post',
+            done: function (res) {
+                var html = '', data;
+                data = res.data;
+                if (res.code == 200) {
+                    for (var i = 0; i < data.length; i++) {
+                        html += '<tr>';
+                        html += '<td>' + data[i].loginName + '</td>';
+                        html += '<td>' + data[i].about + '</td>';
+                        html += '<td>' + data[i].updateTime + '</td>';
+                        html += '<td>' + data[i].loginIp + '</td>';
+                        html += '</tr>';
+                    }
+                    if (res.count > 5) {
+                        html += '<tr><td colspan="4" lay-href="/index.php/account/sub_account/index?sub_status=1" lay-text="子账号">点击查看更多</td></tr>';
+                    }
+                    $('#account-data-html').html(html);
+                } else {
+                    html += '<table class="layui-table" lay-size="sm"><thead><tr><th>' + data + '</th></tr></thead></table>';
+                    $('.account-count-html').html(html);
+                }
+                $('#admin_num').html(res.count);
+
+            }
+        })
+    }, function () {
+        var html = '<tr height=40><td colspan="4">';
+        html += '<i class="layui-icon layui-icon-loading layui-icon layui-anim layui-anim-rotate layui-anim-loop"></i>';
+        html += '</td></tr>';
+        $('#account-data-html').html(html);
+        $('.account-count-html').hide();
+    });
+
+    $('.qc-shortcut-cancel').click(function () {
+        var menu = []
+        $.each($('.J-customProductList input[type=checkbox]:checked'), function (k) {
+            menu[k] = $(this).val();
+        });
+        if (menu.length > 10) {
+            layer.msg("您最多可以收藏10个常用操作！请去掉" + (menu.length - 10) + "个选项")
+            return false;
+        }
+        var postData = {
+            menu: menu
+        }
+        var info = layer.msg('处理中，请稍候', {icon: 16, time: false, shade: 0.7});
+        layui.admin.req({
+            url: '/index.php/index/Collection',
+            type: 'post',
+            data: postData,
+            done: function (res) {
+                layer.close(info);
+                layer.msg(res.msg);
+                // if(res.code == 200){
+                //     setTimeout("window.location.reload()",1500);
+                // }
+            }
+        })
+    })
+
+    function conversion_log_user_del(cobj) {
+        $.ajax({
+            url: "./conversion_log_user_del",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+            }
+        });
+    }
+
+    layui.config({
+        base: '/v1/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form'], function (e) {
+        var $ = layui.$;
+        var admin = layui.admin;
+        var form = layui.form;
+        $('.layui-nav-tree dd').removeClass("layui-this");
+        $('.layui-nav-tree dd').click(function () {
+            $(this).addClass("layui-this").siblings('dd').removeClass('layui-this');
+        });
+        //开启关闭推送
+        form.on('switch(switchTest)', function (data) {
+            if (this.checked) {
+                $.cookie('closePush', true, {path: '/', expires: ''});
+            } else {
+                $.cookie('closePush', false, {path: '/', expires: ''});
+            }
+        });
+        //开启关闭异常会员登陆推送
+        form.on('switch(switchTesth)', function (data) {
+            if (this.checked) {
+                $.cookie('closePushh', true, {path: '/', expires: ''});
+            } else {
+                $.cookie('closePushh', false, {path: '/', expires: ''});
+            }
+        });
+        if ($.cookie('closePush') == 'false') {
+            $("input[name='switch']").prop("checked", false);
+            form.render();
+
+        }
+        if ($.cookie('closePushh') == 'false') {
+            $("input[name='switchh']").prop("checked", false);
+            form.render();
+
+        }
+
+
+        /***自动锁屏-start***/
+
+        // 默认关闭,默认自动关闭时间是20分钟
+        if ($.cookie('if_autolock') != 'true' && $.cookie('if_autolock') != 'false') {
+            $.cookie('if_autolock', false, {path: '/', expires: ''});
+
+        }
+
+        if (!$.cookie('lock_time')) {
+            $.cookie('lock_time', 1200, {path: '/', expires: ''});
+        }
+        $.cookie('last_time', Date.parse(new Date() / 1000), {path: '/', expires: ''});
+
+        function auto_lock() {
+            // console.log('lock');
+            if ($.cookie('if_autolock') == 'true') {
+
+                //当前时间时间戳（秒）
+                var timestamp = (Date.parse(new Date())) / 1000;
+                var last_time = $.cookie('last_time');
+                var lock_time = $.cookie('lock_time');
+                //   console.log(timestamp - last_time);
+                if ((timestamp - last_time) >= 0) {
+                    if ($.cookie('lockcms') == 'false') {
+                        lockPage();
+                        $.cookie('lockcms', true, {path: '/', expires: ''});
+
+
+                    }
+
+
+                }
+
+
+            }
+
+        }
+
+        var clearTime;
+
+        // 开启锁频定时器
+        function lockTime() {
+            clearTime = setTimeout(auto_lock, $.cookie('lock_time') * 1000);
+
+        }
+
+        // 清除锁屏定时器
+        function clearLockTime() {
+
+            clearTime && clearTimeout(clearTime);
+        }
+
+        // select锁屏时间设置
+        if ($.cookie('lock_time')) {
+            var lock_time = $.cookie('lock_time');
+
+            $("#selectCloseTime").val(lock_time);
+
+        }
+        $('#selectCloseTime').change(function () {
+
+            var value = $(this).val();
+            $.cookie('lock_time', value, {path: '/', expires: ''});
+            clearLockTime();
+            lockTime();
+
+        })
+
+
+        /***自动锁屏-end***/
+        function lock_display() {
+            if ($.cookie('if_autolock') == 'true') {
+
+                $('#open_autolock').parent('dd').hide();
+                $('#close_autolock').parent('dd').show();
+                $('#selectCloseTime').parent('dd').show();
+                lockTime();
+            } else {
+
+                $('#open_autolock').parent('dd').show();
+                $('#close_autolock').parent('dd').hide();
+                $('#selectCloseTime').parent('dd').hide();
+            }
+        }
+
+        lock_display();
+
+        // 先自调一次
+        lockTime();
+
+
+        $('#open_autolock').click(function () {
+            $.cookie('if_autolock', true, {path: '/', expires: ''});
+            var times = (Date.parse(new Date())) / 1000;
+            $.cookie('last_time', times, {path: '/', expires: ''});
+            $('#selectCloseTime').val($.cookie('lock_time'));
+            lock_display();
+        })
+        $('#close_autolock').click(function () {
+            clearLockTime();
+            $.cookie('if_autolock', false, {path: '/', expires: ''});
+            lock_display();
+
+        })
+
+        //锁屏
+        function lockPage() {
+            if ($('#lock-box').css('display') == 'none') {
+                $.ajax({
+                    url: "/index.php/login/lockScreen",
+                    type: "POST",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.code == 200) {
+                            layer.open({
+                                title: false,
+                                type: 1,
+                                content: $("#lock-box"),
+                                closeBtn: 0,
+                                shade: 0.9,
+                                end: function () {
+                                    // console.log('close');
+                                    $.cookie('last_time', (Date.parse(new Date()) / 1000), {path: '/', expires: ''});
+                                    lockTime();
+                                }
+                            });
+                        } else if (data.code == 10000) {
+                            layer.msg(data.msg);
+                            location.href = '/?v=1';
+                        } else {
+                            layer.msg("解锁密码错误!");
+                        }
+                    }
+                });
+
+
+            }
+        }
+
+        admin.events.lockPage = function () {
+            // console.log('page');
+
+            $.cookie('lockcms', true, {path: '/', expires: ''});
+            lockPage();
+        };
+        // 判断是否显示锁屏
+        if ($.cookie('lockcms') == 'true') {
+            lockPage();
+        }
+
+        //按回车键提交解锁
+        $(document).keyup(function (event) {
+            if ($('#lock-box').css('display') == 'block') {
+                if (event.keyCode == 13) {
+                    $('#unlock').trigger("click");
+                } else {
+                    $('#lockPwd').focus();
+                }
+            }
+        });
+
+        // 解锁
+        form.on('submit(lockpsd)', function (lockform) {
+            var lockpsd = $(this).siblings(".admin-header-lock-input");
+            lockform.field.LockPwd = lockpsd.val();
+            if (lockpsd.val() == '' || lockpsd.val().length < 6) {
+                layer.msg("解锁密码错误！");
+            } else {
+                $.ajax({
+                    url: "/index.php/login/unlock",
+                    type: "POST",
+                    data: lockform.field,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.code == 200) {
+                            var times = (Date.parse(new Date())) / 1000;
+                            $.cookie('lockcms', false, {path: '/', expires: ''});
+                            $.cookie('last_time', times, {path: '/', expires: ''});
+                            lockpsd.val('');
+                            layer.closeAll("page");
+                            admin.events.refresh();
+                        } else if (data.code == 10000) {
+                            layer.msg(data.msg);
+                            location.href = '/?v=1';
+                        } else {
+                            layer.msg("解锁密码错误!");
+                        }
+                    }
+                });
+
+            }
+        });
+
+        //标签栏可拖拽
+        var drake = dragula({
+            isContainer: function (el) {
+                return el.classList.contains('dragula-container');
+            },
+            direction: 'horizontal',
+            invalid: function (el, handle) {
+                var index = $(el).index();
+                if (index === 0) {
+                    return true
+                }
+            },
+            accepts: function (el, target, source, sibling) {
+                var index = $(sibling).index()
+                if (index === 0) {
+                    return false
+                }
+                return true;
+            },
+
+        });
+        drake.on('drop', function (el, target, source, sibling) {
+
+            var index = $(el).index();
+            var attr = $(el).attr('lay-id');
+            refreshTabBody();
+            //同步路由
+            admin.tabsPage.type = 'tab';
+            admin.tabsPage.index = index;
+            admin.tabsBodyChange(index, {
+                url: attr
+            })
+        });
+
+
+        function refreshTabBody() {
+            var tabContent = $('#LAY_app_body').find('.layadmin-tabsbody-item');
+            var tab = $('#LAY_app_tabsheader').find('li');
+            for (var i = 0; i < tab.length; i++) {
+                if (i == 0) {
+                    continue
+                }
+                var url = $(tab[i]).attr('lay-id');
+                $(tabContent[i]).find('iframe').attr('src', url)
+            }
+        }
+
+
+    }).use('layim', function (layim) {
+        var $ = layui.$;
+        /***************************PK系统公告和重要通知**************************/
+        var mojar = {{:json_encode($notice)}};
+        var startNumber = 1;
+        var number = mojar.length;
+        console.log(mojar);
+        console.log(number);
+
+        function mojarNotice() {
+            layer.open({
+                type: 1
+                , title: 'PK重要通知:' + mojar[0].notice_title
+                , area: ['390px', '380px']
+                , shade: 0.8
+                , maxmin: true
+                , content: '<div style="padding: 20px;">' + mojar[0].notice_content + '</div>'
+                , btn: ['下一条']
+                , yes: function (index, layero) {
+                    if (startNumber < number) {
+                        var title = 'PK重要通知:' + mojar[startNumber].notice_title;
+                        $(layero.selector).find('.layui-layer-title').html(title);
+                        var html = mojar[startNumber].notice_content;
+                        $(layero.selector).find('.layui-layer-content').find('div').html(html);
+                        startNumber++;
+                    } else {
+                        layer.close(index);
+                    }
+
+                }
+                , zIndex: layer.zIndex
+            });
+        }
+
+        if (number > 0) {
+            mojarNotice();
+        }
+        /***************************PK系统公告和重要通知**************************/
+
+        /************************视讯额度警戒线*************************/
+        (function () {
+            $.ajax({
+                type: "POST",
+                url: '/index.php/cash/Sitecash/videFcSpAlertAjx',
+                dataType: "json",
+                data: {},
+                success: function (data) {
+                    if (data) {
+                        var str = '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">';
+                        if (data.fc_money == 1) {
+                            str += '<div>彩票额度不足,为了不影响会员游戏，请尽快充值</div><br/>';
+                        }
+                        if (data.sp_money == 2) {
+                            str += '<div>体育额度不足,为了不影响会员游戏，请尽快充值</div><br/>';
+                        }
+                        if (data.vide_money == 3) {
+                            str += '<div>视讯额度不足,为了不影响会员游戏，请尽快充值</div><br/>';
+                        }
+                        str += '</div>';
+
+                        layer.open({
+                            type: 1
+                            , title: false
+                            , closeBtn: false
+                            , area: '300px;'
+                            , shade: 0.8
+                            , id: 'LAY_layuipro'
+                            , btn: ['额度充值', '稍后处理']
+                            , btnAlign: 'c'
+                            , moveType: 1 //拖拽模式，0或者1
+                            , content: str
+                            , success: function (layero) {
+                                var btn = layero.find('.layui-layer-btn');
+                                btn.find('.layui-layer-btn0').attr({
+                                    'lay-href': '/index.php/cash/Sitecash/sitecash_pay'
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+        })();
+        /************************视讯额度警戒线*************************/
+
+        /************************美东时间*************************/
+        var mddate = "{{$mtime}}";
+        var dd2 = new Date(mddate);
+        var bjmddate = "{{$bjTime}}";
+        var dd3 = new Date(bjmddate);
+
+        function RefTime() {
+            dd2.setSeconds(dd2.getSeconds() + 1);
+            //var myYears = ( dd2.getYear() < 1900 ) ? ( 1900 + dd2.getYear() ) : dd2.getYear();
+            $("#vlock").html('美东' + '：' + fixNum(dd2.getMonth() + 1) + '月' + fixNum(dd2.getDate()) + '日 ' + time(dd2));
+            // dd2.setSeconds(dd2.getSeconds());
+            // $("#clock").html('北京' + '：' + fixNum(dd2.getMonth() + 1) + '月' + fixNum(dd2.getHours() >= 12 ? dd2.getDate() +1 : dd2.getDate()) + '日 ' + time1(dd2));
+            dd3.setSeconds(dd3.getSeconds() + 1);
+            $("#clock").html('北京' + '：' + fixNum(dd3.getMonth() + 1) + '月' + fixNum(dd3.getDate()) + '日 ' + time(dd3));
+
+        }
+
+        function time1(vtime) {
+            var s = '';
+            var d = vtime != null ? new Date(vtime) : new Date();
+            with (d) {
+                var h = getHours();
+                if (h >= 12) {
+                    h -= 12;
+                } else {
+                    h += 12;
+                }
+                s = fixNum(h) + ':' + fixNum(getMinutes()) + ':' + fixNum(getSeconds())
+            }
+            return (s);
+        }
+
+        function time(vtime) {
+            var s = '';
+            var d = vtime != null ? new Date(vtime) : new Date();
+            with (d) {
+                s = fixNum(getHours()) + ':' + fixNum(getMinutes()) + ':' + fixNum(getSeconds())
+            }
+            return (s);
+        }
+
+        function fixNum(num) {
+            return parseInt(num) < 10 ? '0' + num : num;
+        }
+
+        setInterval(RefTime, 1000);
+        /************************美东时间*************************/
+        var quanxian = "{{$role}}";
+        var ws = {};
+
+        // 连接服务端
+        function connect() {
+            // 创建websocket
+            ws = new WebSocket(config.push_url);
+            // 当socket连接打开时，根据ifream内容不同选择不同的处理方式
+            ws.onopen = onopen;
+            // 当有消息时根据消息类型显示不同信息
+            ws.onmessage = onmessage;
+            ws.init = socket_init;
+            ws.onclose = function () {
+                var callback = ws.callback;
+                ///自动重连
+                document.customize.ws = connect();
+                document.customize.ws.init(callback, 'onmessage');
+            };
+            ws.onerror = function () {
+                console.log("出现错误");
+            };
+
+            return ws;
+        }
+
+
+        // 服务端发来消息时
+        function onmessage(e) {
+            var data = JSON.parse(e.data);
+            switch (data.type) {
+                case 'ping':
+                    var data = {};
+                    data.type = 'pong';
+                    ws.send(JSON.stringify(data));
+                    break;
+
+                default:   ///onmessage  自定义回调
+                    ws.callback(data);
+                    break;
+            }
+        }
+
+        ///初始化
+        function socket_init(callback, even_status) {
+            switch (even_status) {
+                case 'onmessage':
+                    ws.callback = callback;
+                    break;
+
+                case 'onopen':
+                    ws.start = callback;
+                    break;
+            }
+        }
+
+        document.customize = function () {
+        };
+        document.customize.ws = connect();
+
+
+        //ws
+        var ws = document.customize.ws;
+        ///注册收到信息回调
+
+        ws.init(render, 'onmessage');
+
+        function pushaccounthtml(data) {
+            var html = '';
+            html += '<tr>';
+            html += '<td>' + data.login_name + '</td>';
+            html += '<td>' + data.about + '</td>';
+            html += '<td>' + data.last_time + '</td>';
+            html += '<td>' + data.last_ip + '</td>';
+            html += '</tr>';
+            if ($('#account-data-html').html().indexOf(data.login_name) < 0) {
+                $('#account-data-html').append(html);
+                $('#admin_num').html(data.count);
+            }
+        }
+
+
+        function render(data) {
+            var window_height = $(window).height();
+            switch (data.type) {
+                case 'online':
+                    $('#user_num').html(data.count);
+                    $("#sitemoney").html(data.money);
+                    $("#tymoney").html(data.tymoney);
+                    $("#fcmoney").html(data.fcmoney);
+                    if (data.conversion == null || data.auto_out == null || typeof data.conversion.state == "undefined" || typeof data.auto_out.state == "undefined") {
+                        return false;
+                    }
+                    if (data.conversion.state == 1) {
+                        var example_item = {
+                            'img': '/public/css/dist/img/cute.png',
+                            'href': 'javascript:;',
+                            'speed': 9,
+                            'bottom': window_height - 50,
+                            'func': conversion_log_user_del,
+                            'info': data.conversion.username + '转' + data.conversion.v_type + '视讯' + data.conversion.money + '元,提示钱包额度不足'
+                        };
+                        $('body').barrager(example_item);
+
+                    }
+                    if (data.auto_out.state == 1) {
+                        var example_item = {
+                            'img': '/public/css/dist/img/haha.gif',
+                            'href': 'javascript:;',
+                            'speed': 9,
+                            'bottom': window_height - 90,
+                            'info': data.auto_out.username + '出款订单号:' + data.auto_out.order_num + '申请自动出款' + data.auto_out.money + '元,请注意查看！'
+                        };
+                        $('body').barrager(example_item);
+
+                    }
+                    break;
+                case 'child_account':
+
+                    if (quanxian == 'sadmin' && data.login_name != '') {
+                        var str = "<div style='padding: 8px;line-height: 22px;background-color: #393D49;color: #fff;font-weight: 300;'>";
+                        str += "<span>登录账号：";
+                        str += data.login_name + "</span>";
+                        str += "<br/>"
+                        str += "<span>上次登录IP：";
+                        str += data.last_ip + "</span>";
+                        str += "<br/>"
+                        str += "<span>本次登录IP：";
+                        str += data.ip + "</span>";
+                        str += "<br/>"
+                        str += "<span>上次登录地址："
+                        str += data.last_ip_address + "</span>";
+                        str += "<br/>"
+                        str += "<span>本次登录地址：";
+                        str += data.address + "</span>";
+                        str += "<br/>"
+                        str += "<span>上次登录时间：";
+                        str += data.last_time + "</span>";
+                        str += "<br/>"
+                        str += "<br/>"
+                        str += "</div>";
+                        layer.open({
+                            type: 1,
+                            title: '子账号登录',
+                            offset: "rb",
+                            skin: 'layui-anim layui-anim-upbit', //样式类名
+                            anim: 2,
+                            shade: 0,
+                            time: 10000,
+                            area: ['260px'],
+                            tipsMore: true,
+                            content: str
+                        });
+                    }
+                    $('#admin_num').html(data.count);
+                    // pushaccounthtml(data)
+                    break;
+                case 'press_money':
+
+                    var str = "<div style='padding: 8px;line-height: 22px;background-color: #393D49;color: #fff;font-weight: 300;'>";
+                    str += "<span>收款人：";
+                    str += data.pay_name + "</span>";
+                    str += "<br/>"
+                    str += "<span>银行类型：";
+                    str += data.bank + "</span>";
+                    str += "<br/>"
+                    str += "<span>银行卡号：";
+                    str += data.pay_card + "</span>";
+                    str += "<br/>"
+                    str += "<span>开户行网点："
+                    str += data.pay_address + "</span>";
+                    str += "<br/>"
+                    str += "<span>备注信息：";
+                    str += data.remark + "<a lay-href='../cash/Paymoney/index' class='layui-btn layui-btn-xs'>去缴款</a></span>";
+                    str += "<br/>"
+                    str += "<br/>"
+                    str += "</div>";
+                    layer.open({
+                        type: 1,
+                        title: '催款信息',
+                        offset: "rb",
+                        skin: 'layui-anim layui-anim-upbit', //样式类名
+                        anim: 2,
+                        shade: 0,
+                        area: ['260px'],
+                        tipsMore: true,
+                        content: str
+                    });
+                    break;
+
+                case 'notice_important':
+                    var str = "<div style='padding: 8px;line-height: 22px;background-color: #393D49;color: #fff;font-weight: 300;'>";
+                    str += "<span>";
+                    str += data.notice_content + "</span>";
+                    str += "<br/>"
+                    str += "<br/>"
+                    str += "</div>";
+                    layer.open({
+                        type: 1,
+                        title: '重要消息通知',
+                        offset: "rb",
+                        skin: 'layui-anim layui-anim-upbit', //样式类名
+                        anim: 2,
+                        shade: 0,
+                        area: ['260px'],
+                        tipsMore: true,
+                        content: str
+                    });
+                    break;
+                case 'abnormal_member':
+                    if ($.cookie('closePushh') == 'false') {
+                        break;
+                    }
+
+                    if (abnormal_member_count === 0) {
+                        var str = "<div style='padding: 8px;line-height: 22px;background-color: #393D49;color: #fff;font-weight: 300;' id='abnormal_member_tips'>";
+                        str += "<span>异常会员：";
+                        str += data.username + "（账号）上线</span>";
+                        str += "<br/>"
+                        str += "<br/>"
+                        str += "</div>"
+                        str += '<div ><a lay-href="/account/member_index?daiwan=1&ver=&index_id=0&agent_id=0&mem_enable=0&mem_status=1&is_show=1&pask=3" style="width: 100%;background: #21694b52;text-align: center;color: red;float: left;" onclick="closeAbnormal()">查看异常会员<b></b></a></div>';
+
+                        layerIndex = layer.open({
+                            type: 1,
+                            title: '异常会员登陆',
+                            offset: 'rt',
+                            skin: 'layui-anim layui-anim-upbit', //样式类名
+                            anim: 2,
+                            shade: 0,
+                            area: ['260px'],
+                            tipsMore: true,
+                            content: str,
+                            cancel: function () {
+                                abnormal_member_count = 0;
+                            }
+                        });
+
+
+                        abnormal_member_count++;
+                    } else {
+
+                        abnormal_member_count++;
+                        console.log($('#abnormal_member_tips').find('a b'));
+                        $('#abnormal_member_tips').next().find('a b').addClass('abnormal_member_class');
+                        $('#abnormal_member_tips').next().find('a b').text(abnormal_member_count);
+                    }
+
+
+                    break;
+
+                case 'press_message':
+                    var str = "<div style='padding: 8px;line-height: 22px;background-color: #393D49;color: #fff;font-weight: 300;'>";
+                    str += "<span>";
+                    str += data.message + "</span>";
+                    str += "<br/>"
+                    str += "<br/>"
+                    str += "</div>";
+                    layer.open({
+                        type: 1,
+                        title: '催款信息',
+                        offset: "rb",
+                        skin: 'layui-anim layui-anim-upbit', //样式类名
+                        anim: 2,
+                        shade: 0,
+                        area: ['260px'],
+                        tipsMore: true,
+                        content: str
+                    });
+                    break;
+                case 'membership':
+                    if ($.cookie('closePush') == 'false') {
+                        break;
+                    }
+                    if (quanxian == 'sadmin') {
+                        var example_item = {
+                            'img': '/public/css/dist/img/cute.png',
+                            'href': 'javascript:;',
+                            'speed': 9,
+                            'bottom': window_height - 130,
+                            'info': '子账号' + data.login_name + '修改了用户' + data.username + '的' + data.data_type
+                        };
+                        $('body').barrager(example_item);
+                    }
+                    break;
+
+                case 'youhuimessage':
+                    if ($.cookie('closePush') == 'false') {
+                        break;
+                    }
+                    if (data.result == 'ok') {
+                        var example_item = {
+                            'img': '/public/css/dist/img/cute.png',
+                            'href': 'javascript:;',
+                            'speed': 9,
+                            'bottom': window_height - 170,
+                            'info': '有新用户提交了优惠申请'
+                        };
+                        $('body').barrager(example_item);
+                    }
+                    break;
+                case 'alarm':
+                    var str = "<div style='padding: 8px;line-height: 22px;background-color: #393D49;color: #fff;font-weight: 300;'>";
+                    str += "<span>昨日" + data.result.platform + "自开彩总投注：";
+                    str += data.result.balance + "</span>";
+                    str += "<br/>"
+                    str += "<span>应扣除视讯额度：";
+                    str += data.result.money + "</span>";
+                    str += "<br/>";
+                    str += "<span>当前剩余视讯额度：";
+                    str += data.result.nowMoney + "</span>";
+                    str += "<br/>";
+                    str += "<span>请保留足够的额度，防止额度扣完影响运营。</span>";
+                    str += "<br/>"
+                    str += "<br/>"
+                    str += "</div>";
+                    layer.open({
+                        type: 1,
+                        title: '重要消息通知',
+                        offset: "rb",
+                        skin: 'layui-anim layui-anim-upbit', //样式类名
+                        anim: 2,
+                        shade: 0,
+                        area: ['260px'],
+                        tipsMore: true,
+                        content: str
+                    });
+                    break;
+            }
+        }
+
+        function onopen() {
+            ///如果header未共享
+            var data = {};
+            data.type = 'xxx';//随意定义
+            data.group = 'admin';
+            data.site_id = "{{$workId}}";
+            ws.send(JSON.stringify(data));
+        }
+
+    });
+
+</script>
+
+
+<!--  这里是layim开始  -->
+
+<!-- im开关 1关闭2开启  -->
+{{if $chatImSwitch == 2 }}
+
+<script>
+    var G__layer_groupPersonFilterName = {username: ''}
+    var cdnUrl = '{{cdnUrl}}';
+    var isWsOk = false
+    var timer = 0
+    var initStatus = []
+    var G__options
+    var G__im = {}
+    var layimInitUrl = '/other/chat/get_chat_json' //接口地址（返回的数据格式见下文）
+
+    function callInit(params, group_id) {
+        initStatus.push(params)
+        if (Array.from(new Set(initStatus)).length >= 2) {
+            var mine = G__options.mine;
+            mine.type = "init";
+            mine.tag = "admin";
+            mine.site_id = '{{$siteId}}';
+            if (group_id) {
+                G__options.mine.group_ids += ',' + group_id
+            }
+
+            window.__CHAT_index_id = mine.index_id
+            socket.send(JSON.stringify(mine));
+        }
+    }
+
+    layui.use('layim', function (layim) {
+        G__im = layim
+        layim.config({
+            //获取主面板列表信息
+            init: {
+                url: layimInitUrl
+                , type: 'get' //默认get，一般可不填
+                , data: {} //额外参数
+                , mine: {
+                    id: '{{$selfId}}',
+                    avatar: cdnUrl + '/public/m/chat/images/adminAvatar.png' //我的头像
+                    //配置我的信息（如果设定了该参数，则优先读取该参数，如果没有，这读取init返回的mine信息）
+                },
+
+            }
+            , maxLength: 300
+            // 头像右键菜单
+            , avatarMenu: {
+                data: [
+                    {
+                        label: '禁言',
+                        show: 2, // 0:所有人员 1:自己 2:对面  或后期扩展不同身份改用数组
+                        type: 'group',
+                        child: [
+                            {event: 'jinyan', label: '10分钟', value: 0},
+                            {event: 'jinyan', label: '1小时', value: 1},
+                            {event: 'jinyan', label: '24小时', value: 2}
+                        ],
+                    },
+                    {
+                        label: '全员禁言',
+                        show: 2,
+                        type: 'group',
+                        child: [
+                            {event: 'jinyanAll', label: '10分钟', value: 0},
+                            {event: 'jinyanAll', label: '1小时', value: 1},
+                            {event: 'jinyanAll', label: '24小时', value: 2}
+                        ]
+                    }
+                ]
+            }
+
+            // 消息右键菜单
+            , msgMenu: {
+                data: [
+                    {
+                        label: '删除消息',
+                        show: 0, // 0:所有人员 1:自己 2:对面  或后期扩展不同身份改用数组
+                        type: 'group',
+                        event: 'deleteMsg'
+                    }
+                ]
+            }
+
+            //获取群员接口
+            , members: {
+                url: '/other/chat/getmembers', //接口地址（返回的数据格式见下文）
+                data: G__layer_groupPersonFilterName //额外参数
+            }
+            , copyright: true
+            , showChatLog: false
+            , showSign: false
+            , find: false
+            , isfriend: false
+            , search: false
+            , searchAll: true
+            , chatLog: '/other/chat/chatLog?page=2' //聊天记录地址（如果未填则不显示）
+            , isAvatarChat: true // 是否群聊点击头像进行私聊(除管理员外)
+            , uploadFile: {
+                url: '' //（返回的数据格式见下文）
+                , type: '' //默认post
+            }
+            , tool: [{
+                alias: 'templateMsg' // 工具别名
+                , title: '发送游戏链接' // 工具名称
+                , icon: '&#xe64c;' // 工具图标，参考图标文档
+            }]
+            , emptyData: {
+                always: true,
+                url: '/other/chat/get_conversation_list' // 二次开发提供 缓存没有请求接口地址
+            }
+            , removeOne: {
+                url: '/other/chat/remove_conversation_one'
+            }
+            , clearHistory: {
+                url: '/other/chat/clear_conversation_list'
+            }
+            , contentFilter: function (content) { // 自定义内容过滤
+                var temp = content
+                if (content.match(/^\[templateMsg\]/g)) {
+                    var arr = content.split('[templateMsg]')
+                    temp = ''
+                    for (var i = 0; i < arr.length; i++) {
+                        content = arr[i]
+                        if (!content) continue
+                        var text = content.match(/\[content\](.*?)\[\/content\]/)
+                        text = text ? text.slice(-1)[0] : ''
+
+                        var img = content.match(/\[pic\](.*?)\[\/pic\]/)
+                        img = img ? img.slice(-1)[0] : ''
+
+                        if (text || img) {
+                            temp += [
+                                '<div class="templateMsg">'
+                                , '  <h2 style="font-size: 16px;margin-bottom: 10px;">' + text + '</h2>'
+                                , '  <img style="width: 120px; min-width: 120px; min-height: 120px; height: 120px;" src="' + img + '" alt="加载失败">'
+                                , '</div>'
+                            ].join('')
+                        } else {
+                            temp += content
+                        }
+                    }
+                } else {
+                    temp = layui.data.content(temp)
+                }
+                return temp
+            }
+            , sendMessage: function (res, done) {
+
+                // 添加群聊
+                $.post('/other/chat/sendMessage', {
+                        'do_id': res['mine']['id'],
+                        'username': res['mine']['username'],
+                        'from_avatar': res['mine']['avatar'],
+                        'avatar': res['to']['avatar'],
+                        'from_id': res['mine']['id'],
+                        'index_id': res['to']['index_id'],
+                        'content': res['mine']['content'],
+                        'to_id': res['to']['id'],
+                        'site_id': res['to']['site_id'],
+                        'to_name': res['to']['name'],
+                        'type': res['to']['type'],
+                    }
+                ).then(function (res) {
+                    if (res.indexOf('<script') !== -1) {
+                        $(document.body).append($(res.replace('<script', '<script id="pp_notice"').replace('window.history.go(-1)', '')))
+                        setTimeout(function () {
+                            $('#pp_notice').remove()
+                        })
+                    } else {
+                        var data = {}
+                        try {
+                            data = JSON.parse(res)
+                        } catch (err) {
+                            console.warn(err)
+                        }
+
+                        if (data.code !== 200) {
+                            layer.msg(data.msg)
+                            $('.layim-chat.layui-show .layim-chat-main').attr({page: '', lock: ''})
+                        } else {
+                            done(data.data, data.create_date)
+                        }
+                    }
+                })
+            }
+        })
+
+        function debounce(fn, wait) {
+            var callback = fn;
+            var timerId = null;
+
+            function debounced() {
+                // 保存作用域
+                var context = this;
+                // 保存参数，例如 event 对象
+                var args = arguments;
+
+                clearTimeout(timerId);
+                timerId = setTimeout(function () {
+                    callback.apply(context, args);
+                }, wait);
+            }
+
+            // 返回一个闭包
+            return debounced;
+        }
+
+        //基础配置
+        layim.on('ready', function (options) {
+            G__options = options
+            callInit('ready')
+        });
+
+        // 发送模板消息
+        layim.on('tool(templateMsg)', function (insert, send, obj) { //事件中的tool为固定字符，而code则为过滤器，对应的是工具别名（alias）
+            var data = []
+
+            $.ajax({
+                url: '/other/chat/get_cp_imgs',
+                dataType: 'json',
+                success(res) {
+                    if (res && res.code === 200) {
+                        var data = (res ? res.data : [])
+
+                        // for (var key in data) {
+                        //   for (var se in data[key]) {
+                        //     if (typeof data[key][se] === 'object') {
+                        //       data[key][se] = Object.keys(data[key][se]).reduce((total, nowKey) => total.concat(data[key][se][nowKey]), [])
+                        //     }
+                        //   }
+                        // }
+
+                        console.log(data);
+
+                        var options = Object.keys(data)
+                        var key = options[0]
+                        var second = Object.keys(data[key])[0]
+                        var href = data[key] && data[key][second] && data[key][second].length ? data[key][second][0].href : ''
+
+                        layer.open({
+                            title: '发送游戏链接',
+                            area: ['340px', '350px'],
+                            btn: ['发送'],
+                            content: $(`
+                          <div id="gameLinkTemplate">
+                              <div class="layui-form custom-select layui-form-item gameLinkType">
+                                <label class="layui-form-label">类别</label>
+                                <div class="layui-input-block layui-form-type-item">
+                                  <select name="type1" lay-verify="required" id="templateType" lay-filter="type">
+                                    ` + options.reduce((total, item, i) => total + `<option ${!i ? 'selected' : ''} value="${item}">${item}</option>`, '') + `
+                                  </select>
+
+                                  <select name="type2" lay-verify="required" id="templateType2" lay-filter="type2">
+                                    ` + Object.keys(data[key]).reduce((total, item, i) => total + `<option ${!i ? 'selected' : ''} value="${item}">${item}</option>`, '') + `
+                                  </select>
+                                </div>
+                              </div>
+
+                              <div class="layui-form custom-select layui-form-item gameLinkGame">
+                                <label class="layui-form-label">游戏</label>
+                                <div class="layui-input-block">
+                                  <select style="height: 100px"  lay-search name="game" lay-verify="required" id="templateGame" lay-filter="game">
+                                    ` + data[key][second].reduce((total, item, i) => total + `<option ${!i ? 'selected' : ''} value="${(item.image || item.img_url) + '|' + item.href + '|' + (item.name || item.type)}">${item.name || item.type}</option>`, '') + `
+                                  </select>
+                                </div>
+                              </div>
+
+                              <div class="layui-form layui-form-item" style="margin-top: 20px;">
+                                <label class="layui-form-label">图片</label>
+                                <div class="layui-input-block">
+                                  <img id="templateMsgPic" src="` + (data[key] && (data[key][second][0].image || data[key][second][0].img_url)) + `" alt="" />
+                                </div>
+                              </div>
+                          </div>`).html(),
+                            success(layero, index) {
+                                var form = layui.form
+
+                                form.render()
+
+                                $('.custom-select .layui-anim-upbit').css({
+                                    position: 'absolute',
+                                    left: 0,
+                                    top: 22,
+                                    maxHeight: '210px'
+                                })
+
+                                layui.form.on('select(type)', function (othis) {
+                                    if (!othis.value) return
+                                    key = othis.value
+                                    second = Object.keys(data[key])[0]
+
+                                    $('#templateType2').html(
+                                        Object.keys(data[key]).reduce((total, item, i) => total + `<option ${!i ? 'selected' : ''} value="${item}">${item}</option>`, '')
+                                    )
+
+                                    $('#templateGame').html(
+                                        data[key][second].reduce((total, item, i) => total + `<option ${!i ? 'selected' : ''} value="${(item.image || item.img_url) + '|' + item.href + '|' + (item.name || item.type)}">${(item.name || item.type)}</option>`, '')
+                                    )
+
+
+                                    // 找到顶层的window来重新渲染因为在顶层下面的
+                                    window.top.layui.form.render('select')
+
+                                    if (data[key] && data[key][second]) {
+                                        $('#templateMsgPic').attr('src', data[key][second][0].image || data[key][second][0].img_url)
+                                        href = data[key][second][0].href
+                                    }
+                                })
+
+                                layui.form.on('select(type2)', function (othis) {
+                                    second = othis.value
+
+                                    $('#templateGame').html(
+                                        data[key][second].reduce((total, item, i) => total + `<option ${!i ? 'selected' : ''} value="${(item.image || item.img_url) + '|' + item.href + '|' + (item.name || item.type)}">${(item.name || item.type)}</option>`, '')
+                                    )
+
+                                    // 找到顶层的window来重新渲染因为在顶层下面的
+                                    window.top.layui.form.render('select')
+
+                                    if (data[key] && data[key][second]) {
+                                        $('#templateMsgPic').attr('src', data[key][second][0].image || data[key][second][0].img_url)
+                                        href = data[key][second][0].href
+                                    }
+                                })
+
+                                layui.form.on('select(game)', function (othis) {
+                                    var value = othis.value.split('|')
+                                    href = value[1]
+                                    $('#templateMsgPic').attr('src', value[0])
+                                })
+                            },
+                            yes: function (index, dom) {
+                                var content = ($('#templateGame').val() || '').split('|')[2]
+
+                                var pic = $(dom).find('#templateMsgPic').attr('src')
+
+                                if (content && href && pic) {
+                                    var chat = obj.elem.find('textarea')
+                                    var prevContent = chat.val()
+                                    chat.val('[templateMsg]' + '[content]' + content + '[/content]' + '[href]' + href + '[/href]' + '[pic]' + pic + '[/pic]' + '[/templateMsg]')
+                                    send()
+                                    chat.val('')
+
+                                    if (prevContent) {
+                                        chat.val(prevContent)
+                                    }
+                                }
+
+                                layer.close(index)
+                            }
+                        });
+                    }
+                }
+            })
+            // console.log(this); //获取当前工具的DOM对象
+            // console.log(obj); //获得当前会话窗口的DOM对象、基础信息
+        });
+
+        // 删除消息
+        layim.on('deleteMsg', function (event, data, othis) {
+            var $msgLi = othis.parents('*[data-cid=' + data.cid + ']')
+
+            if (!$msgLi.length) return layer.msg('没有找到对应的消息ID～')
+            if (othis.data('isDelete')) return layer.msg('删除中...')
+
+            othis.data('isDelete', true)
+            othis.append('<i style="margin-left: 4px;" class="layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop"></i>')
+            $.ajax({
+                url: '/other/chat/del_chat_message',
+                data: {
+                    cid: data.cid,
+                    group_id: data.chatId
+                },
+                dataType: 'json',
+                success(res) {
+                    if (res.code === 200) {
+                        if (layim.delGroupMsg(data.cid, data.chatId)) {
+                            othis.parents('*[data-cid=' + data.cid + ']').remove()
+                            return layer.msg('删除成功')
+                        } else {
+                            return layer.msg('本地删除失败！')
+                        }
+                    }
+                    layer.msg(res && res.msg || '删除失败！')
+                },
+                error(err) {
+                    othis.removeData('isDelete')
+                }
+            })
+        })
+
+        // 头像菜单禁言监听
+        layim.on('jinyan', function (e, data, $this) {
+            $.ajax({
+                url: '/other/chat/prohibit_speak',
+                data: {
+                    group_id: data.chatId,
+                    user_id: data.uid,
+                    speak_type: data.value
+                },
+                dataType: 'json',
+            }).then(res => {
+                if (res.code === 200) {
+                    console.log(1);
+                    layer.msg('禁言成功!!!')
+                } else {
+                    layer.msg(res.msg)
+                }
+            })
+
+            return false // 二级菜单不要冒泡事件出去
+        })
+
+        layim.on('jinyanAll', function (e, data, $this) {
+            $.ajax({
+                url: '/other/chat/prohibit_speak',
+                data: {
+                    group_id: data.chatId,
+                    user_id: data.uid,
+                    speak_type: data.value,
+                    is_all: 1
+                },
+                dataType: 'json',
+            }).then(res => {
+                if (res.code === 200) {
+                    layer.msg('全员禁言成功!!!')
+                } else {
+                    layer.msg(res.msg)
+                }
+            })
+        })
+
+        layim.on('emptyData', function (res) {
+
+            var history = {}
+
+            var chatlog = {}
+
+            for (var key in res.list) {
+
+                var dataArr = res.list[key]
+
+                for (var i = 0; i < dataArr.length; i++) {
+                    var data = JSON.parse(dataArr[i])
+                    var id = data && data.from_id
+                    var name = data && data.from_name
+                    var avatar = data.avatar
+
+                    if (data) {
+                        data.id = id
+                        data.username = name
+                        data.name = name
+                        data.timestamp = data.create_time
+                        data.uid = data.from_id
+                        data.avatar = avatar
+                        data.cid = data.cid
+                        if ('{{$selfId}}' === data.from_id) data.mine = true
+
+                        delete data.from_id
+                        delete data.from_name
+                        delete data.create_time
+                        delete data.site_id
+                        delete data.index_id
+                        delete data.to_avatar
+                        delete data.from_avatar
+                    }
+
+                    dataArr[i] = data
+                }
+
+                chatlog[key] = dataArr
+            }
+
+            for (var key in chatlog) {
+                if (chatlog[key].length) {
+                    history[key] = Object.assign({}, chatlog[key].slice(-1)[0])
+
+                    if (
+                        +'{{$selfId}}' !== +history[key].from_id && +'{{$selfId}}' !== +history[key].to_id ||
+                        +'{{$selfId}}' === +history[key].from_id
+                    ) {
+                        history[key].id = history[key].to_id
+                        history[key].name = history[key].to_name
+                    }
+
+                    delete history[key].uid
+                    delete history[key].cid
+                    delete history[key].username
+                    delete history[key].to_name
+                    delete history[key].to_id
+                }
+            }
+
+            return {chatlog: chatlog, history: history}
+        })
+
+        layim.on('online', function (status) {
+            console.log(status); //获得online或者hide
+
+            //此时，你就可以通过Ajax将这个状态值记录到数据库中了 。
+            //服务端接口需自写。
+        });
+
+        layim.on('members', function (data) {
+            G__layer_groupPersonFilterName.username = ''
+        });
+
+        //注意：简约模式（即brief: true时）不会触发该事件
+        layim.on('chatChange', function (data) {
+            // 初始化页数
+            var $wrap = data.elem.find('.layim-chat-main')
+            var $view = $wrap.find('ul')
+            var curPage = $wrap.attr('page')
+            $wrap.attr("page", curPage || 1)
+
+
+            // 初始化滚动事件
+            if (!curPage) {
+
+                function formatTime(stamp) {
+                    var date = new Date(+stamp)
+                    var y = date.getFullYear()
+                    var m = ('0' + (date.getMonth() + 1)).slice(-2)
+                    var d = ('0' + date.getDate()).slice(-2)
+                    var h = ('0' + date.getHours()).slice(-2)
+                    var i = ('0' + date.getMinutes()).slice(-2)
+                    var s = ('0' + date.getSeconds()).slice(-2)
+
+                    return y + '-' + m + '-' + d + ' ' + h + ':' + i + ':' + s
+                }
+
+                function handlerScroll() {
+                    var $this = $(this)
+                    var nowTop = $this.scrollTop()
+                    var page = $this.attr('page')
+
+                    if (nowTop <= 0) {
+                        if ($this.attr('lock') || ($this.attr('page') === 'false')) return
+                        $this.attr('lock', '1')
+                        $this.attr('page', ++page)
+
+                        // 请求多页
+                        $.ajax({
+                            url: '/other/chat/chatLog',
+                            data: {
+                                page,
+                                type: data.data.type,
+                                id: data.data.id
+                            },
+                            success(res) {
+                                res = JSON.parse(res)
+
+                                if (!res.length) return $this.attr('page', 'false')
+                                $this.removeAttr('lock')
+
+                                var firstLi = $this.find('ul > li:eq(0)')
+
+                                layim.addMessage(res.map(e => {
+                                    return {
+                                        id: e.from_id,
+                                        avatar: e.from_avatar || cdnUrl + "/public/m/chat/images/adminAvatar.png",
+                                        username: e.from_name,
+                                        timestamp: e.create_time,
+                                        uid: e.from_id,
+                                        cid: e.id,
+                                        content: e.content,
+                                        type: e.type
+                                    }
+                                }))
+
+                                var top = firstLi.offset()
+                                top = top && top.top - 230 || 0
+                                top && $this.scrollTop(top)
+                            },
+                            error() {
+                                $this.removeAttr('lock')
+                            }
+                        })
+                    }
+                }
+
+                $wrap.on('scroll', debounce(handlerScroll, 50))
+            }
+        });
+    });
+
+    function wsInit() {
+        if (isWsOk) return clearInterval(timer)
+        socket = new WebSocket('{{$chatWsUrl}}');
+
+        socket.onopen = function () {
+            isWsOk = true
+
+            callInit('socket')
+        }
+
+        socket.onclose = function () {
+            isWsOk = false
+            clearInterval(timer)
+            timer = setInterval(() => {
+                wsInit()
+            }, 5e3)
+        }
+
+        //监听收到的消息
+        socket.onmessage = function (res) {
+            try {
+                res = JSON.parse(res.data);
+            } catch (err) {
+                console.warn(err)
+            }
+
+            if (res && res.message_type === 'chatMessage') {
+                G__im.getMessage(res.data); //res.data即你发送消息传递的数据（阅读：监听发送的消息）
+            } else if (res && res.message_type === 'addList') {
+                G__im.addList(res.data); //如果是在iframe页，如LayIM设定的add面板，则为 parent.layui.layim.addList(data);
+            } else if (res && res.type === 'ping') {
+                var chat_redis_item = '{{$chatJqRedisItem}}';
+                socket.send(JSON.stringify({
+                    type: 'pong',
+                    uid: '{{$selfId}}',
+                    sid: getCookie('PHPSESSID'),
+                    is_admin: 1,
+                    item: chat_redis_item
+                }))
+                // 监听删除群聊
+            } else if (res.message_type === 'del_group') {
+                G__im.removeList({type: 'group', id: res.group_id})
+            } else if (res.message_type === 'add_group') {
+                $.ajax({
+                    url: layimInitUrl,
+                    data: {},
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result && result.code === 0) {
+                            var flag = false
+                            result.data.group.forEach(e => {
+                                if (!G__im.cache().group.some(j => e.group_id === j.group_id)) {
+                                    G__im.addList(Object.assign({type: 'group'}, e))
+                                    flag = true
+                                }
+                            })
+                            if (flag) {
+                                callInit('socket', res.group_id)
+                            }
+                        }
+                    }
+                })
+            } else if (res.code == 1e4) {
+                layer.msg("你已掉线，请重新登陆!")
+                location.href = '/'
+            }
+            $('.layim-chat-main').removeAttr('lock')
+        };
+    }
+
+    wsInit()
+
+    // 搜索过滤
+    $('body').on('click', '.layui-searchPerson-btn', function () {
+        var $cur = $('.layim-chat-group.layui-show')
+        var $now = $cur.find('.layim-chat-username')
+
+        G__layer_groupPersonFilterName.username = $cur.find('.layim-person-input').val()
+
+        $now.data('down', false)
+        $now.trigger('click')
+    })
+    $('body').on('keydown', '.layim-person-input', function (e) {
+        if (!e || (e && e.keyCode === 13)) {
+            var $cur = $('.layim-chat-group.layui-show')
+            var $now = $cur.find('.layim-chat-username')
+
+            G__layer_groupPersonFilterName.username = $cur.find('.layim-person-input').val()
+
+            $now.data('down', false)
+            $now.trigger('click')
+        }
+    })
+
+</script>
+{{/if}}
+<!-- 这里是layim结束 -->
+
+
+</body>
+
+<script>
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+    }
+
+    function setCookie(name, value, day) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() + day * 24 * 60 * 60 * 1000);
+        document.cookie = name + "=" + escape(value) + ";path=/;expires=" + exp.toGMTString();
+    }
+
+    if (!getCookie('headState')) {
+        setCookie('headState', 'vertical');
+    } else if (getCookie('headState') === 'horizontal') {
+        console.log(getCookie('headState'));
+        topchange = false;
+        $('#LAY_app_body').css({
+            'left': '0px',
+            'top': '121px'
+        });
+        $('#sideMenu').css('top', '25px');
+        $('#LAY_app_tabs').css({
+            'top': '89px',
+            'left': 0
+        })
+        changeLine_menu();
+        $("#LAY_app_position").addClass('layui-icon-more').removeClass('layui-icon-more-vertical')
+    } else if (getCookie('headState') === 'vertical') {
+        $("#LAY_app_position").addClass('layui-icon-more-vertical').removeClass('layui-icon-more')
+    }
+    // 控制侧边栏展示方式
+    var topchange = false, sideChange = false;
+    $('#LAY_app_position').click(function () {
+        var i = $(this);
+        // 切换icon
+        changeNav_modal();
+        i.toggleClass(function (position, name, state) {
+            if (i.hasClass('layui-icon-more-vertical')) {
+                setCookie('headState', 'horizontal');
+                //转换成头部展示
+                topchange = true;
+                $('#LAY_app_body').css({
+                    'left': '0px',
+                    'top': '121px'
+                });
+                $('#sideMenu').css('top', '25px');
+                $('#LAY_app_tabs').css({
+                    'top': '89px',
+                    'left': 0
+                })
+                i.removeClass('layui-icon-more-vertical');
+                changeLine_menu();
+                return 'layui-icon-more'
+            } else {
+                setCookie('headState', 'vertical')
+                // 转换成左边栏展示
+                topchange = false;
+                $('#LAY_app_body').css({
+                    'left': '120px',
+                    'top': '54px'
+                });
+                $('#sideMenu').css('top', '0px');
+                $('#LAY_app_tabs').css({
+                    'top': '28px',
+                    'left': '120px'
+                })
+                i.removeClass('layui-icon-more');
+                changeVertical_menu();
+                return 'layui-icon-more-vertical'
+            }
+        })
+
+    })
+
+    //  切换成头部展示
+    function changeLine_menu() {
+        var sideMenu = $('#sideMenu');
+        sideMenu.removeClass('layui-side-menu');
+        $('#sideMenu ul').removeClass('layui-nav-tree');
+
+        $('#sideMenu ul').addClass('layui-nav-inline');
+        sideMenu.addClass('inline-menu');
+        var li = sideMenu.find('ul.layui-nav li');
+        li.each(function () {
+            $(this).removeClass('layui-nav-itemed');
+        })
+
+    }
+
+    //  切换成侧边栏展示
+    function changeVertical_menu() {
+        var sideMenu = $('#sideMenu');
+        sideMenu.addClass('layui-side-menu');
+        $('#sideMenu ul').removeClass('layui-nav-inline');
+        $('#sideMenu ul').addClass('layui-nav-tree');
+        sideMenu.removeClass('inline-menu');
+        if (sideChange) {
+            $('#LAY_app_body').css({
+                'left': '30px'
+            });
+            $('#LAY_app_tabs').css({
+                'left': '30px'
+            });
+        }
+    }
+
+    //全品遮罩
+    function changeNav_modal() {
+        layer.open({
+            type: 1,
+            content: '视图更新中...',
+            shade: 0.5,
+            closeBtn: 0,
+            title: false,
+            time: 1000
+
+        })
+    }
+
+    // logo切换效果
+    $('#LAY_app_flexible').click(function () {
+        var self = $(this);
+        if (self.hasClass('layui-icon-shrink-right')) {
+            sideChange = true;
+            $('#logo_marquee').hide();
+            if (!topchange) {
+                $('#LAY_app_body').css('left', '30px');
+                $('#LAY_app_tabs').css({
+                    'left': '30px'
+                });
+            } else {
+                $('#LAY_app_body').css('left', '0px');
+            }
+
+        } else if (self.hasClass('layui-icon-spread-left')) {
+            sideChange = false;
+            $('#logo_marquee').show();
+            if (!topchange) {
+                $('#LAY_app_body').css('left', '120px');
+                $('#LAY_app_tabs').css({
+                    'left': '120px'
+                });
+            }
+
+        }
+    })
+
+</script>
+</html>

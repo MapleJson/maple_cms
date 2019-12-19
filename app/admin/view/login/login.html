@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>后台管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/v1/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/v1/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="/v1/layuiadmin/style/login.css" media="all">
+    <script>
+        if (top.location != self.location) {
+            top.location = self.location;
+        }
+    </script>
+</head>
+<body onkeydown="keyLogin();">
+
+<style>
+
+    body {
+        background: url("/public/video/bg.jpg");
+        background-size: cover;
+        position: relative;
+        z-index: -101;
+    }
+
+    #video_wrapper video {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        z-index: -100;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+    }
+
+    video {
+        display: inline-block;
+        vertical-align: baseline;
+    }
+
+    .layadmin-user-login-main {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 5px;
+    }
+
+    .layadmin-user-login-footer, .layadmin-user-login-footer a {
+        color: #fff;
+    }
+
+    .layui-form-checkbox[lay-skin=primary] span {
+        color: #f6f6f6;
+    }
+</style>
+<div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
+
+
+    <div class="layadmin-user-login-main">
+        <div class="layadmin-user-login-box layadmin-user-login-header">
+            <h2>{{$siteName}}</h2>
+            <p style="color: #000;">PK官方出品，必属精品</p>
+        </div>
+        <form class="layadmin-user-login-box layadmin-user-login-body layui-form" action="/index.php/login/loginDoV1"
+              method="post">
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-username"
+                       for="LAY-user-login-username"></label>
+                <input type="text" name="LoginName" id="LAY-user-login-username" lay-verify="required|loginName"
+                       placeholder="用户名"
+                       class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <label class="layadmin-user-login-icon layui-icon layui-icon-password"
+                       for="LAY-user-login-password"></label>
+                <input type="password" name="LoginPassword" id="LAY-user-login-password" lay-verify="required"
+                       placeholder="密码" class="layui-input">
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-row">
+                    <div class="layui-col-xs7">
+                        <label class="layadmin-user-login-icon layui-icon layui-icon-vercode"
+                               for="LAY-user-login-vercode"></label>
+                        <input type="text" name="CheckCode" id="LAY-user-login-vercode" lay-verify="required"
+                               placeholder="验证码" class="layui-input" maxlength="4">
+                    </div>
+                    <div class="layui-col-xs5">
+                        <div style="margin-left: 10px;">
+                            <img src="/captcha.php" class="layadmin-user-login-codeimg"
+                                 id="LAY-user-get-vercode">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item" style="margin-bottom: 20px;">
+                <input style="color:#fff;" type="checkbox" value="1" name="lastingLogin" lay-skin="primary"
+                       title="持久登陆">
+            </div>
+            <div class="layui-form-item">
+                <button id="login" class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-login-submit"
+                        type="submit">登 入
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="layui-trans layadmin-user-login-footer">
+
+    <p>© 2018 <a href="javascript:;">Copyright by PKBet System Corporation.</a></p>
+</div>
+
+</div>
+
+<script src="/v1/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/v1/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'user'], function () {
+        var $ = layui.$
+            , setter = layui.setter
+            , admin = layui.admin
+            , form = layui.form
+            , router = layui.router()
+            , search = router.search;
+
+        form.render();
+    });
+
+    function keyLogin() {
+        if (event.keyCode == 13) {//回车键的键值为13
+            document.getElementById("login").click(); //调用登录按钮的登录事件
+        }
+    }
+</script>
+</body>
+</html>
