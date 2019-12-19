@@ -83,30 +83,3 @@ function lang($name, array $vars = [], string $lang = '')
 {
     return \think\facade\Lang::get(strval($name), $vars, $lang);
 }
-
-/**
- * Session管理
- *
- * @param string $name  session名称
- * @param mixed  $value session值
- *
- * @return mixed
- */
-function session($name = '', $value = '')
-{
-    if (is_null($name)) {
-        // 清除
-        session_destroy();
-    } elseif ('' === $name) {
-        return $_SESSION;
-    } elseif (is_null($value)) {
-        // 删除
-        unset($_SESSION[$name]);
-    } elseif ('' === $value) {
-        // 判断或获取
-        return 0 === strpos($name, '?') ? !empty($_SESSION[substr($name, 1)]) : (empty($_SESSION[$name]) ? '' : $_SESSION[$name]);
-    } else {
-        // 设置
-        $_SESSION[$name] = $value;
-    }
-}

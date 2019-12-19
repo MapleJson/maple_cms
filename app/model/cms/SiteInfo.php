@@ -1,7 +1,7 @@
 <?php
 declare (strict_types = 1);
 
-namespace app\model\manage;
+namespace app\model\cms;
 
 use think\Model;
 
@@ -10,7 +10,7 @@ use think\Model;
  */
 class SiteInfo extends Model
 {
-    protected $connection = 'manage';
+    protected $connection = 'cms';
 
     protected $schema = [
         'id'              => 'int',
