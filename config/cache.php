@@ -59,38 +59,6 @@ return [
             'tag_prefix' => 'tag:',
             'serialize'  => [],
         ],
-        // 视讯缓存连接方式配置
-        'video'   => [
-            // 驱动方式
-            'type'       => 'redis',
-            // 服务器地址
-            'host'       => Env::get('redis.redis_video_host', '127.0.0.1'),
-            'port'       => (int)Env::get('redis.redis_video_port', 6379),
-            'password'   => Env::get('redis.redis_video_password', null),
-            'select'     => (int)Env::get('redis.redis_video_database', 0),
-            'timeout'    => 0,
-            'expire'     => 0,
-            'persistent' => false,
-            'prefix'     => '',
-            'tag_prefix' => 'tag:',
-            'serialize'  => [],
-        ],
-        // 聊天室连接方式配置
-        'chat'    => [
-            // 驱动方式
-            'type'       => 'redis',
-            // 服务器地址
-            'host'       => Env::get('redis.redis_chat_host', '127.0.0.1'),
-            'port'       => (int)Env::get('redis.redis_chat_port', 6379),
-            'password'   => Env::get('redis.redis_chat_password', null),
-            'select'     => (int)Env::get('redis.redis_chat_database', 0),
-            'timeout'    => 0,
-            'expire'     => 0,
-            'persistent' => false,
-            'prefix'     => '',
-            'tag_prefix' => 'tag:',
-            'serialize'  => [],
-        ],
         // 更多的缓存连接
         //        'file'    => [
         //            // 驱动方式

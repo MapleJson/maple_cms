@@ -8,55 +8,32 @@ use app\admin\model\SysAdmin;
 use app\Controller;
 use app\common\Code;
 use app\common\Common;
-use app\model\manage\AgSiteRole;
-use app\model\manage\AllRoleRecord;
-use app\model\manage\ChatImSwitch;
-use app\model\pri\SiteNotice;
-use app\model\pri\SpMoney;
-use app\model\pri\VideoMoney;
-use app\model\pri\WebConfig;
 use think\App;
 
 class Index extends Controller
 {
-    /**
-     * 需要提出的权限
-     * @var array
-     */
-    private $ignoreRole = [
-        'b7', 'e18', 'e20', 'e22', 'e23',
-        'e24', 'e25', 'e26', 'e27', 'e28',
-        'e29', 'e30', 'e31', 'e32'
-    ];
-
     public function index()
     {
-        $data = [
-            'mtime'            => date('Y/m/d') . ' ' . date('H:i:s'),
-            'bjTime'           => date('Y/m/d  H:i:s', strtotime('+12 hour')),
-            'date'             => date('Y年m月d日') . ' ' . date('H:i:s'),
-            'loginName'        => session('login_name_1'),
-            'selfId'           => session('adminid'),
-            'role'             => session('quanxian'),
-            'siteId'           => SITE_ID,
-            'chatWsUrl'        => env('OTHER.CHAT_WS_URL'),
-            'chatJqRedisItem'  => env('OTHER.CHAT_JQ_REDIS_ITEM'),
-            'cndUrl'           => env('OTHER.CDN_URL'),
-            'workId'           => md5(md5('pk1688' . SITE_ID . 'company')),
-            'onlineUserNum'    => Common::getOnlineUserCountBySite(SITE_ID),
-            'videoMoney'       => VideoMoney::getMoneyBySite(SITE_ID),
-            'sportMoney'       => SpMoney::getMoneyBySite(SITE_ID),
-            'notice'           => SiteNotice::getNoticeBySite(SITE_ID),
-            'siteName'         => WebConfig::getSiteNameBySite(SITE_ID),
-            'chatImSwitch'     => ChatImSwitch::getChatSwitchBySite(SITE_ID),
-        ];
+//        $data = [
+//            'mtime'            => date('Y/m/d') . ' ' . date('H:i:s'),
+//            'bjTime'           => date('Y/m/d  H:i:s', strtotime('+12 hour')),
+//            'date'             => date('Y年m月d日') . ' ' . date('H:i:s'),
+//            'loginName'        => session('login_name_1'),
+//            'selfId'           => session('adminid'),
+//            'role'             => session('quanxian'),
+//            'siteId'           => SITE_ID,
+//            'chatWsUrl'        => env('OTHER.CHAT_WS_URL'),
+//            'chatJqRedisItem'  => env('OTHER.CHAT_JQ_REDIS_ITEM'),
+//            'cndUrl'           => env('OTHER.CDN_URL'),
+//            'workId'           => md5(md5('pk1688' . SITE_ID . 'company')),
+//        ];
+//
+//        $data['onlineAccountNum'] = request()->isSuper ? count(Common::getOnlineAccountCountBySite(SITE_ID)) : 0;
+//
+//        //站点所有一二级导航
+//        list($data['menus'], $data['sidebars'], $data['collection']) = $this->getMenuByAccount();
 
-        $data['onlineAccountNum'] = request()->isSuper ? count(Common::getOnlineAccountCountBySite(SITE_ID)) : 0;
-
-        //站点所有一二级导航
-        list($data['menus'], $data['sidebars'], $data['collection']) = $this->getMenuByAccount();
-
-        return view('index/index', $data);
+        return 222;//view('index/index', $data);
     }
 
     public function adminOnlineList()
@@ -130,10 +107,6 @@ class Index extends Controller
         }
         // 整理二级导航
         foreach ($siteMenus as $siteMenu) {
-            //导航剔出入款按钮控制权限
-            if (in_array($siteMenu['role_name'], $this->ignoreRole, true)) {
-                continue;
-            }
             if ((int)$siteMenu['pid']) {
                 $menus[$siteMenu['pid']]['child'][] = $siteMenu;
             }

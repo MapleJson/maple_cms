@@ -7,15 +7,12 @@ namespace app\admin\controller\index;
 use app\admin\model\SysAdmin;
 use app\common\Code;
 use app\Controller;
-use app\model\pri\WebConfig;
 
 class Login extends Controller
 {
     public function index()
     {
-        return view('login/login', [
-            'siteName' => WebConfig::getSiteNameByHost($this->request->host())
-        ]);
+        return 111;//view('login/login');
     }
 
     public function login()
@@ -26,7 +23,7 @@ class Login extends Controller
     public function changePwd()
     {
         return view('login/changePwd', [
-            'loginName' => session('login_name_1')
+            'loginName' => session('loginName')
         ]);
     }
 
@@ -34,7 +31,7 @@ class Login extends Controller
     {
         $post = self::post(__FUNCTION__);
         if (SysAdmin::changePassword($post['password'], SITE_ID, (int)session('adminid'))) {
-            return $this->responsePopup(Code::EDIT_SUCCESS);
+            return $this->responsePopup(Code::SUCCESS);
         }
         return $this->responsePopup(Code::FAIL_TO_EDIT, false);
     }

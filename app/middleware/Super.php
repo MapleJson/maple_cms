@@ -3,6 +3,8 @@ declare (strict_types = 1);
 
 namespace app\middleware;
 
+use app\common\Code;
+
 class Super
 {
     /**
@@ -15,7 +17,7 @@ class Super
     public function handle($request, \Closure $next)
     {
         if (!$request->isSuper) {
-            return response('无此权限');
+            return response('无此权限', Code::NO_PERMISSION);
         }
         return $next($request);
     }
