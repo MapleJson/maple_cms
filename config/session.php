@@ -11,7 +11,7 @@ return [
     // 驱动方式 支持file cache
     'type'           => 'cache',
     // 存储连接标识 当type使用cache的时候有效
-    'store'          => 'session',
+    'store'          => 'file',
     // 过期时间
     'expire'         => 1200,
     // 前缀
