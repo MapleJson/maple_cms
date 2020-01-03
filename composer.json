@@ -47,7 +47,7 @@
             "@php think vendor:publish"
         ],
         "post-install-cmd": [
-            "@php -r \"file_exists('.env') || copy('.example.env', '.env');\""
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ]
     }
 }
