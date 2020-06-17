@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace app;
 
@@ -14,19 +14,21 @@ class Controller extends BaseController
 {
     /**
      * 本类实例 单例
+     *
      * @var null
      */
     protected static $_instances = null;
 
     /**
      * 返回数据
+     *
      * @var array
      */
     protected static $response = [
-        'code'  => Code::SUCCESS,
+        'code' => Code::SUCCESS,
         'count' => Code::ZERO,
-        'msg'   => '',
-        'data'  => [],
+        'msg' => '',
+        'data' => [],
     ];
 
     /**
@@ -59,7 +61,7 @@ class Controller extends BaseController
      * @param array  $data
      * @param string $name
      *
-     * @return array
+     * @return array|void
      */
     private static function validateRequest(array $data, string $name)
     {
@@ -89,8 +91,8 @@ class Controller extends BaseController
         if (is_int($content)) $content = lang($content);
 
         $redirect = ($redirect == 'back') ? 'window.history.back()' : 'window.location="' . $redirect . '"';
-        $waits    = $proper ? 2500 : 1500;
-        $color    = $proper ? '#009900' : '#FF0000';
+        $waits = $proper ? 2500 : 1500;
+        $color = $proper ? '#009900' : '#FF0000';
 
         $html = <<<EOL
             <!DOCTYPE html>
